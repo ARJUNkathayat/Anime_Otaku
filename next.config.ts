@@ -5,7 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     domains: [
       "cdn.noitatnemucod.net",
-      "cdn-icons-png.flaticon.com"
+      "cdn-icons-png.flaticon.com",
+      'cdn.myanimelist.net'
 
     ],
   }

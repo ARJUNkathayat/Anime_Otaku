@@ -20,17 +20,32 @@ interface AnimeData {
   rating: number; // 0-100 scale
 }
 
-const AnimeCard = ({ data }: { data: AnimeData }) => {
+const AnimeCard = ({ data, variant = "default" }: { data: AnimeData; variant?: string }) => {
   const router = useRouter();
   const handleClick = () => router.push(`/animeInfo/${data.id}`);
 
-  // Safely destructure tvInfo with defaults
+  // Responsive size based on variant
+  let cardClass = "";
+  switch (variant) {
+    case "small":
+      cardClass = "w-full aspect-[2/3]"; // fits grid cell nicely
+      break;
+    case "medium":
+      cardClass = "w-56 h-72";
+      break;
+    case "large":
+      cardClass = "w-72 h-96";
+      break;
+    default:
+      cardClass = "w-64 h-96";
+  }
+
   const { dub = "N/A", sub = "N/A", duration = "N/A" } = data.tvInfo || {};
 
   return (
     <div
       onClick={handleClick}
-      className="relative w-64 h-96 rounded-2xl overflow-hidden shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300"
+      className={`${cardClass} relative rounded-2xl overflow-hidden shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300`}
       aria-label={`View details for ${data.title}`}
     >
       {/* Poster */}
@@ -55,13 +70,13 @@ const AnimeCard = ({ data }: { data: AnimeData }) => {
       </div>
 
       {/* Info */}
-      <div className="absolute bottom-0 w-full p-4 bg-black/60 text-white backdrop-blur-md">
+      <div className="absolute bottom-0 w-full p-3 bg-black/60 text-white backdrop-blur-md">
         <h3 className="font-bold text-lg truncate">{data.title}</h3>
         <div className="flex justify-between mt-1 text-sm text-gray-300">
           <span>{data.type}</span>
           <span>{data.year}</span>
         </div>
-        <div className="flex justify-between mt-2 text-xs text-gray-200">
+        <div className="flex justify-between mt-1 text-xs text-gray-200">
           <span>Episodes: {data.episodes}</span>
           <span>Duration: {duration}</span>
         </div>
@@ -69,9 +84,7 @@ const AnimeCard = ({ data }: { data: AnimeData }) => {
           <span>Dub: {dub}</span>
           <span>Sub: {sub}</span>
         </div>
-        <div className="mt-1 text-xs text-yellow-400">
-          Rating: {data.rating}/100
-        </div>
+        <div className="mt-1 text-xs text-yellow-400">Rating: {data.rating}/100</div>
       </div>
     </div>
   );
