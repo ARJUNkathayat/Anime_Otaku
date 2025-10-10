@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
 import { animeCategories } from "@/utils/category";
 import AnimeCard from "@/components/HeroAnimeCard";
+import { useRouter } from "next/navigation";
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
 
@@ -10,6 +11,7 @@ const CategoryPage = () => {
   const [animedata, setAnimedata] = useState([]);
   const [category, setCategory] = useState("top-airing");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const getData = async () => {
     setLoading(true);
@@ -17,6 +19,7 @@ const CategoryPage = () => {
       const res = await fetch(`https://anime-streaming-chi.vercel.app/api/${category}`);
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
+      console.log("kkk",data?.results?.data)
       setAnimedata(data?.results?.data || []);
     } catch (error) {
       console.error(error);
@@ -45,7 +48,7 @@ const CategoryPage = () => {
           <div
             key={item}
             className="py-2 px-3 rounded-md cursor-pointer hover:bg-white/30 text-white transition"
-            onClick={() => console.log(`${item} clicked`)}
+            onClick={() => router.push(`/${item}`)}
           >
             {item}
           </div>
@@ -61,16 +64,18 @@ const CategoryPage = () => {
         {/* Scrollable Category Bar */}
         <div className="flex gap-4 overflow-x-auto scroll-smooth snap-x py-2 mb-4 md:mb-6">
           {animeCategories.map((cat) => (
-            <div
-              key={cat}
-              onClick={() => setCategory(cat)}
-              className={`min-w-[7rem] h-10 md:h-12 flex items-center justify-center rounded-md cursor-pointer transition-all duration-300 snap-center
-                         ${category === cat
-                           ? "bg-purple-800 border-b-4 border-yellow-400 font-semibold"
-                           : "bg-purple-600 hover:bg-purple-700"}`}
-            >
-              {cat}
-            </div>
+           <div
+  key={cat}
+  onClick={() => setCategory(cat)}
+  className={`min-w-[8rem] h-10 md:h-12 flex items-center justify-center cursor-pointer transition-all duration-300 snap-center
+              bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl
+              ${category === cat
+                ? "border-yellow-400 font-semibold scale-105"
+                : "hover:bg-white/20 hover:scale-105"}`}
+>
+  {cat}
+</div>
+
           ))}
         </div>
 

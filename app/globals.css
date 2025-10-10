@@ -26,13 +26,6 @@ body {
 }
 
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE/Edge */
-  scrollbar-width: none;     /* Firefox */
-}
 
 
 body {
@@ -46,3 +39,26 @@ body {
   min-height: 100vh;
 }
 
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  height: 8px; /* horizontal scrollbar height */
+  width: 8px; /* vertical scrollbar width */
+}
+
+/* Track (background of scrollbar) */
+::-webkit-scrollbar-track {
+  background: #2a2a2a; /* dark gray track */
+  border-radius: 10px;
+}
+
+/* Handle (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: #62bbc6; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #17e1fc; /* brighter pink on hover */
+}

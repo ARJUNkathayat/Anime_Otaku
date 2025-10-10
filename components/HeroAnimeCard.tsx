@@ -7,6 +7,7 @@ interface TVInfo {
   dub?: string;
   sub?: string;
   duration?: string;
+  eps?: string
 }
 
 interface AnimeData {
@@ -27,6 +28,9 @@ const AnimeCard = ({ data, variant = "default" }: { data: AnimeData; variant?: s
   // Responsive size based on variant
   let cardClass = "";
   switch (variant) {
+    case "verySmall":
+      cardClass = "w-[12rem] h-[20rem]"
+      break;
     case "small":
       cardClass = "w-full aspect-[2/3]"; // fits grid cell nicely
       break;
@@ -40,12 +44,12 @@ const AnimeCard = ({ data, variant = "default" }: { data: AnimeData; variant?: s
       cardClass = "w-64 h-96";
   }
 
-  const { dub = "N/A", sub = "N/A", duration = "N/A" } = data.tvInfo || {};
+  const { dub = "N/A", sub = "N/A", duration = "N/A" ,eps="N/A"} = data.tvInfo || {};
 
   return (
     <div
       onClick={handleClick}
-      className={`${cardClass} relative rounded-2xl overflow-hidden shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300`}
+      className={`${cardClass} snap-start flex-shrink-0 relative rounded-2xl overflow-hidden shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300`}
       aria-label={`View details for ${data.title}`}
     >
       {/* Poster */}
@@ -77,14 +81,14 @@ const AnimeCard = ({ data, variant = "default" }: { data: AnimeData; variant?: s
           <span>{data.year}</span>
         </div>
         <div className="flex justify-between mt-1 text-xs text-gray-200">
-          <span>Episodes: {data.episodes}</span>
+          <span>Episodes: { sub}</span>
           <span>Duration: {duration}</span>
         </div>
         <div className="flex justify-between mt-1 text-xs text-gray-200">
           <span>Dub: {dub}</span>
           <span>Sub: {sub}</span>
         </div>
-        <div className="mt-1 text-xs text-yellow-400">Rating: {data.rating}/100</div>
+        
       </div>
     </div>
   );
