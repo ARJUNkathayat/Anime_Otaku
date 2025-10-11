@@ -1,32 +1,85 @@
-"use client"
+// components/SideNavbar.tsx
+"use client";
 
-import { useRouter } from 'next/navigation'
-import React from 'react'
+import Link from "next/link";
 
-const SideNavbar = () => {
-    const router = useRouter();
-    const romance = "genre/romance"
+export default function SideNavbar() {
   return (
-    <div>
-         <div className="flex flex-row md:flex-col p-4 gap-3 md:h-screen w-full md:w-60 
-                      bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-4 text-white">Menu</h2>
-        {[
-          "Home", "top-search", "Categories", "top-Airing", "Top Rated",
-          "Upcoming", "Movies", "TV Series", "Dubbed Anime", "Subbed Anime"
-          , romance
-        ].map((item) => (
-          <div
-            key={item}
-            className="py-2 px-3 rounded-md cursor-pointer hover:bg-white/30 text-white transition"
-            onClick={() => router.push(`/${item}`)}
-          >
-            {item}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+    <div className="relative min-h-screen">
+      {/* Toggle Checkbox */}
+      <input
+        type="checkbox"
+        id="nav-toggle"
+        className="hidden peer"
+      />
 
-export default SideNavbar
+      {/* Sidebar */}
+      <div
+        className="fixed top-0 left-0 h-screen bg-[#284351] text-white
+        transition-all duration-500 overflow-hidden
+        w-16 peer-checked:w-56"
+      >
+        {/* Header / Toggle Button */}
+        <label
+          htmlFor="nav-toggle"
+          className="block cursor-pointer p-4 font-bold text-lg tracking-widest"
+        >
+          N
+        </label>
+
+        {/* Menu Items */}
+        <nav className="flex flex-col mt-5 space-y-2">
+          <Link
+            href="/Home"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-[#34546A] transition-all"
+          >
+            <span className="font-bold text-lg">🏠</span>
+            <span className="text-white transition-all duration-500 
+                overflow-hidden 
+              peer-checked:opacity-100 peer-checked:w-auto">
+              Home
+            </span>
+          </Link>
+
+          <Link
+            href="/popular"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-[#34546A] transition-all"
+          >
+            <span className="font-bold text-lg">🔥</span>
+            <span className="text-white transition-all duration-500 
+                overflow-hidden 
+              peer-checked:opacity-100 peer-checked:w-auto">
+              Popular
+            </span>
+          </Link>
+
+          <Link
+            href="/anime"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-[#34546A] transition-all"
+          >
+            <span className="font-bold text-lg">🎞️</span>
+            <span className="text-white transition-all duration-500 
+                overflow-hidden 
+              peer-checked:opacity-100 peer-checked:w-auto">
+              Anime List
+            </span>
+          </Link>
+
+          <Link
+            href="/about"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-[#34546A] transition-all"
+          >
+            <span className="font-bold text-lg">ℹ️</span>
+            <span className="text-white transition-all duration-500 
+                overflow-hidden 
+              peer-checked:opacity-100 peer-checked:w-auto">
+              Info
+            </span>
+          </Link>
+        </nav>
+      </div>
+
+    
+    </div>
+  );
+}
